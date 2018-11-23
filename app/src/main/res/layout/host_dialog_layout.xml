@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/dialogIpEditText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:digits="0123456789."
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="IP Adresi Giriniz" />
+
+    <EditText
+        android:id="@+id/dialogMacEditText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="Mac Adresi Giriniz" />
+
+    <EditText
+        android:id="@+id/dialogLabelEditText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="Etiket Giriniz" />
+
+    <Button
+        android:id="@+id/dialogAcceptButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="Onayla" />
+</LinearLayout>

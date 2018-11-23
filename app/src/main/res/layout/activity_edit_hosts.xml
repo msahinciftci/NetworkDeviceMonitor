@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+
+    tools:context=".EditHostsActivity">
+
+    <EditText
+        android:id="@+id/viewCountET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="How Many?"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/viewCountBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/viewCountET"
+        android:text="Add" />
+
+    <Button
+        android:id="@+id/addHostButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="Accept" />
+
+    <ListView
+        android:divider="@color/black"
+        android:dividerHeight="3dp"
+        android:id="@+id/addHostLV"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/addHostButton"
+        android:descendantFocusability="beforeDescendants" />
+</RelativeLayout>
