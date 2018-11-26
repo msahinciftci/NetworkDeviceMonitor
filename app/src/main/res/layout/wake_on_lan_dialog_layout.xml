@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:hint="Mac Adresi" />
+        android:hint="Mac Address" />
 
     <Button
         android:id="@+id/wakeButtonDialog"
@@ -20,6 +20,6 @@
         android:layout_below="@+id/wakeEditText"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:hint="Uyandır" />
+        android:hint="Send W-O-L" />
 
 </RelativeLayout>

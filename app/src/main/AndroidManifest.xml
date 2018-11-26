@@ -23,8 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="bta.networkmonitor.EditHostsActivity" />
+        <activity android:name="bta.networkmonitor.EditDevicesActivity" />
     </application>
 
 </manifest>

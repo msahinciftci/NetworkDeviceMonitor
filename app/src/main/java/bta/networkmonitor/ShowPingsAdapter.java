@@ -34,19 +34,19 @@ import static bta.networkmonitor.ShowPingsActivity.IsOnSameLan;
 
 @SuppressWarnings("All")
 class ShowPingsAdapter extends ArrayAdapter {
-    ArrayList<HostObject> hosts;
+    ArrayList<DeviceObject> devices;
     private Context context;
     private LayoutInflater inflater;
 
-    public ShowPingsAdapter(@NonNull Context context, int resource, ArrayList<HostObject> hosts) {
+    public ShowPingsAdapter(@NonNull Context context, int resource, ArrayList<DeviceObject> devices) {
         super(context, resource);
         this.context = context;
-        this.hosts = hosts;
+        this.devices = devices;
     }
 
     @Override
     public int getCount() {
-        return hosts.size();
+        return devices.size();
     }
 
     @NonNull
@@ -58,30 +58,31 @@ class ShowPingsAdapter extends ArrayAdapter {
             if (v != null) {
                 h = (ViewHolder) v.getTag();
             } else {
-                v = inflater.inflate(R.layout.show_pings_row, parent, false);
+                v = inflater.inflate(R.layout.show_pings_single_row_layout, parent, false);
                 h.statusIV = v.findViewById(R.id.statusIV);
                 h.chart = v.findViewById(R.id.chart);
-                h.infoTV = v.findViewById(R.id.hostInfoTextView);
+                h.infoTV = v.findViewById(R.id.deviceInfoTextView);
                 v.setTag(h);
             }
 
-            if (hosts.get(position) != null) {
-                h.infoTV.setText(hosts.get(position).ip + "\n" + hosts.get(position).mac + "\n" + hosts.get(position).label);
-                if (!IsOnSameLan(context, hosts.get(position).ip))
-                    setHostStatus(h, 'w');
-                else if (hosts.get(position).isRed) {
-                    setHostStatus(h, 'd');
-                    if (hosts.get(position).notified == false) {
-                        showNotification(hosts.get(position));
+            if (devices.get(position) != null) {
+                h.infoTV.setText(devices.get(position).ip + "\n" + devices.get(position).mac + "\n" + devices.get(position).label);
+                if (!IsOnSameLan(context, devices.get(position).ip)) {
+                    setDeviceStatus(h, 'w');
+                } else if (devices.get(position).isRed) {
+                    setDeviceStatus(h, 'd');
+                    if (devices.get(position).notified == false) {
+                        setNotification(true, devices.get(position));
                         MediaPlayer mp = MediaPlayer.create(context, R.raw.long_beep);
                         mp.start();
-                        hosts.get(position).notified = true;
+                        devices.get(position).notified = true;
                     }
                 } else {
-                    setHostStatus(h, 'n');
+                    setDeviceStatus(h, 'n');
+                    setNotification(false, devices.get(position));
                 }
             }
-            setChart(h.chart, hosts.get(position));
+            setChart(h.chart, devices.get(position));
             notifyDataSetChanged();
             h.chart.invalidate();
         } catch (Exception e) {
@@ -90,7 +91,7 @@ class ShowPingsAdapter extends ArrayAdapter {
         return v;
     }
 
-    private void setChart(LineChart ch, HostObject h) {
+    private void setChart(LineChart ch, DeviceObject h) {
         try {
             LineDataSet lineDataSet = new LineDataSet(h.entries, "");
             LineData lineData = new LineData(lineDataSet);
@@ -98,7 +99,6 @@ class ShowPingsAdapter extends ArrayAdapter {
                 ch.clear();
             else
                 ch.setData(lineData);
-
             Description desc = new Description();
             desc.setText("");
             ch.setDoubleTapToZoomEnabled(false);
@@ -117,7 +117,7 @@ class ShowPingsAdapter extends ArrayAdapter {
         }
     }
 
-    private void setHostStatus(ViewHolder h, char status) {
+    private void setDeviceStatus(ViewHolder h, char status) {
         switch (status) {
             case 'n': //'n' -> normal
                 h.infoTV.setTextColor(Color.GREEN);
@@ -136,22 +136,28 @@ class ShowPingsAdapter extends ArrayAdapter {
         }
     }
 
-    public void showNotification(HostObject hostObject) {
-        String[] splitted = hostObject.ip.split("\\.");
-        Toast.makeText(context, "Connection lost with device: " + hostObject.label + " - " + hostObject.ip,
-                Toast.LENGTH_SHORT).show();
-        final int id = Integer.parseInt(splitted[splitted.length - 1]);
-        PendingIntent pi = PendingIntent.getActivity(context, id, new Intent(context, ShowPingsActivity.class), 0);
-        Notification notification = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Connection lost")
-                .setContentText("Connection lost with device: " + hostObject.label + " - " + hostObject.ip)
-                .setContentIntent(pi)
-                .build();
+    public void setNotification(boolean showNotification, DeviceObject deviceObject) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        // The code below will turn ip of device's last three group of numbers into notification id of the device.
+        // For example if device ip is 192.168.13.12, then notification id set for the device will be 1681312
+        String[] splittedIP = deviceObject.ip.split("\\.");
+        int notificationId = Integer.parseInt(splittedIP[1] + splittedIP[2] + splittedIP[3]);
+        if (showNotification) {
+            Toast.makeText(context, "Connection lost with device: " + deviceObject.label + " - " + deviceObject.ip,
+                    Toast.LENGTH_SHORT).show();
+            PendingIntent pi = PendingIntent.getActivity(context, notificationId, new Intent(context, ShowPingsActivity.class), 0);
+            Notification notification = new NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentTitle("Connection lost")
+                    .setContentText("Connection lost with device: " + deviceObject.label + " - " + deviceObject.ip)
+                    .setContentIntent(pi)
+                    .build();
+            notificationManager.notify(notificationId, notification);
+            Handler h = new Handler();
+        } else {
+            notificationManager.cancel(notificationId);
+        }
 
-        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(id, notification);
-        Handler h = new Handler();
         /*The code snippet below will make the notification removed after 10 seconds.
 
         long delayInMilliseconds = 10000;

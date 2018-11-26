@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.github.mikephil.charting.data.Entry;
 import com.stealthcopter.networktools.Ping;
-import com.stealthcopter.networktools.WakeOnLan;
 import com.stealthcopter.networktools.ping.PingResult;
 
 import java.util.ArrayList;
@@ -15,19 +14,18 @@ import java.util.ArrayList;
 import static bta.networkmonitor.ShowPingsActivity.IsOnSameLan;
 import static bta.networkmonitor.ShowPingsActivity.pingCount;
 
-@SuppressWarnings("All")
-class HostObject implements Comparable<HostObject> {
-    Context context;
+class DeviceObject implements Comparable<DeviceObject> {
+    private Context context;
     String label;
     String ip;
     String mac;
     ArrayList<Entry> entries;
     ArrayList<String> times = new ArrayList<>();
-    int timeOutCount;
+    private int timeOutCount;
     boolean isRed;
     boolean notified = false;
 
-    HostObject(Context context, String ip, String mac, String label) {
+    DeviceObject(Context context, String ip, String mac, String label) {
         this.context = context;
         this.label = label;
         this.ip = ip;
@@ -77,24 +75,24 @@ class HostObject implements Comparable<HostObject> {
     }
 
     @Override
-    public int compareTo(@NonNull HostObject hostObject) {
+    public int compareTo(@NonNull DeviceObject deviceObject) {
         String[] firstIP = ip.split("\\.");
-        String[] secondIP = hostObject.ip.split("\\.");
-        if (IsOnSameLan(context, ip) && IsOnSameLan(context, hostObject.ip)) {
+        String[] secondIP = deviceObject.ip.split("\\.");
+        if (IsOnSameLan(context, ip) && IsOnSameLan(context, deviceObject.ip)) {
             for (int i = 0; i < 4; i++) {
                 int result = compareThem(Integer.parseInt(firstIP[i]), Integer.parseInt(secondIP[i]));
                 if (result != 0)
                     return result;
             }
             return 0;
-        } else if (!IsOnSameLan(context, ip) && !IsOnSameLan(context, hostObject.ip)) {
+        } else if (!IsOnSameLan(context, ip) && !IsOnSameLan(context, deviceObject.ip)) {
             for (int i = 0; i < 4; i++) {
                 int result = compareThem(Integer.parseInt(firstIP[i]), Integer.parseInt(secondIP[i]));
                 if (result != 0)
                     return result;
             }
             return 1;
-        } else if (!IsOnSameLan(context, ip) && IsOnSameLan(context, hostObject.ip)) {
+        } else if (!IsOnSameLan(context, ip) && IsOnSameLan(context, deviceObject.ip)) {
             return 1;
         } else return -1;
     }
@@ -109,15 +107,15 @@ class HostObject implements Comparable<HostObject> {
         }
     }
 
-    private class SendPing extends AsyncTask {
+    private class SendPing extends AsyncTask<Void, Void, Void> {
         String time;
 
-        public SendPing(String time) {
+        SendPing(String time) {
             this.time = time;
         }
 
         @Override
-        protected Boolean doInBackground(Object[] objects) {
+        protected Void doInBackground(Void... params) {
             try {
                 PingResult pingResult = Ping.onAddress(ip).setTimeOutMillis(1000).doPing();
                 if (pingResult != null && pingResult.fullString != null) {
@@ -148,11 +146,4 @@ class HostObject implements Comparable<HostObject> {
         }
     }
 
-    public void wake() {
-        try {
-            WakeOnLan.sendWakeOnLan("255.255.255.255", mac);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

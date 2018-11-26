@@ -11,14 +11,14 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/hostInfoTextView"
+            android:id="@+id/deviceInfoTextView"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
             android:gravity=""
-            android:text="255.255.255.255\nFF:FF:FF:FF:FF:FF\nCBKiosk"
+            android:text="255.255.255.255\nFF:FF:FF:FF:FF:FF\nLabel"
             android:textSize="20sp"
             tools:ignore="HardcodedText" />
 
@@ -29,27 +29,27 @@
             android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
-            android:layout_toLeftOf="@+id/editHostBtn"
+            android:layout_toLeftOf="@+id/editDeviceBtn"
             android:adjustViewBounds="true"
             android:maxHeight="35dp"
             android:maxWidth="35dp"
             android:src="@drawable/wifi" />
 
         <ImageButton
-            android:id="@+id/editHostBtn"
+            android:id="@+id/editDeviceBtn"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
-            android:layout_toLeftOf="@+id/delHostBtn"
+            android:layout_toLeftOf="@+id/delDeviceBtn"
             android:maxHeight="35dp"
             android:maxWidth="35dp"
-            android:onClick="editHost"
+            android:onClick="editDevice"
             android:scaleType="fitCenter"
             android:src="@drawable/edit" />
 
         <ImageButton
-            android:id="@+id/delHostBtn"
+            android:id="@+id/delDeviceBtn"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"
@@ -57,7 +57,7 @@
             android:layout_margin="5dp"
             android:maxHeight="35dp"
             android:maxWidth="35dp"
-            android:onClick="deleteHost"
+            android:onClick="deleteDevice"
             android:scaleType="fitXY"
             android:src="@drawable/delete" />
     </RelativeLayout>

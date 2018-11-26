@@ -8,36 +8,36 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/editHostIpTextView"
+        android:id="@+id/editDeviceIpTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:hint="255.255.255.255"
+        android:hint=""
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/editHostMacTextViev"
+        android:id="@+id/editDeviceMacTextViev"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:hint="FF:FF:FF:FF:FF:FF"
+        android:hint="Click to enter data"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/editHostLabelTextView"
+        android:id="@+id/editDeviceLabelTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:hint="Label"
+        android:hint=""
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="20sp"

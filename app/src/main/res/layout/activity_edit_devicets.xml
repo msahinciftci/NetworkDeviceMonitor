@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
 
-    tools:context=".EditHostsActivity">
+    tools:context=".EditDevicesActivity">
 
     <EditText
         android:id="@+id/viewCountET"
@@ -23,7 +23,7 @@
         android:text="Add" />
 
     <Button
-        android:id="@+id/addHostButton"
+        android:id="@+id/addDeviceButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -32,9 +32,9 @@
     <ListView
         android:divider="@color/black"
         android:dividerHeight="3dp"
-        android:id="@+id/addHostLV"
+        android:id="@+id/addDeviceLV"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@id/addHostButton"
+        android:layout_below="@id/addDeviceButton"
         android:descendantFocusability="beforeDescendants" />
 </RelativeLayout>

@@ -13,7 +13,7 @@
         android:digits="0123456789."
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:hint="IP Adresi Giriniz" />
+        android:hint="Enter IP Address" />
 
     <EditText
         android:id="@+id/dialogMacEditText"
@@ -23,7 +23,7 @@
         android:layout_margin="10dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:hint="Mac Adresi Giriniz" />
+        android:hint="Enter Mac Address" />
 
     <EditText
         android:id="@+id/dialogLabelEditText"
@@ -33,7 +33,7 @@
         android:layout_margin="10dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:hint="Etiket Giriniz" />
+        android:hint="Enter Label" />
 
     <Button
         android:id="@+id/dialogAcceptButton"
@@ -41,5 +41,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="Onayla" />
+        android:text="Accept" />
 </LinearLayout>
